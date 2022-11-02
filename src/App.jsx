@@ -26,7 +26,6 @@ export default function App() {
     });
     return filtredContacts;
   };
-  
   const filtredContacts = getFiltredContacts();
   const length = contacts.length;
 
