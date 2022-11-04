@@ -26,12 +26,15 @@ export default function ContactList({ items }) {
   });
 
   return (
+
     <div>
       <p>Find contact by name:</p>
       <ol>{elem}</ol>
     </div>
   );
 }
+
+
 ContactList.prototype = {
   items: PropTypes.arrayOf(
     PropTypes.shape({

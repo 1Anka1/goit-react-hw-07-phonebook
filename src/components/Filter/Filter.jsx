@@ -13,8 +13,10 @@ export default function Filter({ filter }) {
     dispatch(setFilter(value))
     };
   
-    return (
-        <input type="text" name='filter' value={filter} onChange={onChangeFilter} />
+  return (
+    <>
+      <h1>Contacts</h1>
+      <input type="text" name='filter' value={filter} onChange={onChangeFilter} /></>
     )
 }
 Filter.prototype = {

@@ -1,7 +1,10 @@
-import { useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
 //REDUX
 import { getContacts } from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
+import { fetchContacts } from 'redux/contacts/operations';
 // import { addContact } from 'redux/contacts/slice';
 
 //COMPONENTS
@@ -13,7 +16,12 @@ import Filter from 'components/Filter';
 export default function App() {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
-  
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   const getFiltredContacts = () => {
     if (!filter) {
       return contacts;
@@ -26,14 +34,13 @@ export default function App() {
     });
     return filtredContacts;
   };
+
   const filtredContacts = getFiltredContacts();
   const length = contacts.length;
 
   return (
-    <Section title={'Task - 2 Contact book'}>
-      <h1>Phonebook</h1>
-      <ContactForm/>
-      <h1>Contacts</h1>
+    <Section>
+      <ContactForm />
       <Filter filter={filter} />
       {length > 0 ? (
         <ContactList items={filtredContacts} />

@@ -1,6 +1,3 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { nanoid } from 'nanoid';
-
 // const contactsSlice = {
 //   name: 'contacts',
 //   initialState: {
@@ -25,6 +22,9 @@ import { nanoid } from 'nanoid';
 // };
 // export const { fetchingInProgress, fetchingSuccess, fetchingError } =
 //   contactsSlice.actions;
+
+import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
 
 const contactsSlice = createSlice({
   name: 'contacts',

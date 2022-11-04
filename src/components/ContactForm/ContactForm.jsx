@@ -37,7 +37,9 @@ export default function ContactForm() {
   };
 	
   return (
-    <fieldset>
+    <>
+      <h1>Phonebook</h1>
+      <fieldset>
       <form onSubmit={onAddContact}>
         <label>
           <h2 className={css.title}>Name</h2>
@@ -50,8 +52,7 @@ export default function ContactForm() {
             placeholder="Please enter your full name "
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
+            required />
         </label>
 
         <label>
@@ -65,12 +66,11 @@ export default function ContactForm() {
             placeholder="Please enter your number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
+            required />
         </label>
         <button className={css.addBtn}>Add Contact</button>
       </form>
-    </fieldset>
+    </fieldset></>
   );
 }
 
