@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
@@ -9,7 +9,7 @@ import { removeContact } from 'redux/contacts/slice';
 import { getContacts } from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
 import { fetchContacts } from 'redux/contacts/operations';
-import * as contactShelfAPI from '../../redux/shared/api/contacts'
+import * as contactShelfAPI from 'redux/shared/api/contacts'
 
 export default function ContactList() {
   const contacts = useSelector(getContacts);
@@ -24,6 +24,7 @@ export default function ContactList() {
   useEffect(() => {
     contactShelfAPI.getContacts().then(setItems);
   }, [])
+  console.log(items);
   
   const getFiltredContacts = () => {
     if (!filter) {

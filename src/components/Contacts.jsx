@@ -15,7 +15,6 @@ export default function Contact() {
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
   const length = contacts.length;
-
   return (
     <>
       <ContactForm />
