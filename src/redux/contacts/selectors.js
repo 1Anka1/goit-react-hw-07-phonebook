@@ -3,7 +3,6 @@ export const getState = ({ contacts }) => ({
   loading: contacts.loading,
   error: contacts.error,
 });
-
 export const getFiltredContacts = ({ contacts, filter }) => {
   if (!filter) {
     return contacts.items;

@@ -20,6 +20,7 @@ export default function Contacts() {
   // const [removeContact] = useRemoveContactMutation()
 
   const contacts = useSelector(getFiltredContacts);
+  // console.log(contacts);
   const {loading, error} = useSelector(getState);
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
@@ -41,12 +42,12 @@ export default function Contacts() {
     const { value } = e.target;
     dispatch(setFilter(value))
   };
-
+  const length = contacts.length;
   return (
     <>
       <ContactForm onSubmit={onAddContact} />
       <Filter onChangeFilter={onChangeFilter} filter={filter} />
-      {contacts.length > 0 ? (
+      {length > 0 ? (
         <ContactList items={contacts} removeContact={onRemoveContact} />
       ) : (
         <p>Contact list is empty.</p>
