@@ -10,7 +10,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
-import contactsApi from './contacts/api';
 
 //REDUX
 import rootReducer from './rootReducer';
