@@ -1,11 +1,11 @@
 //COMPONENTS
+import Contacts from 'components/Contacts';
 import Section from 'components/Section';
-import Contact from 'components/Contacts';
 
 export default function App() {
   return (
     <Section>
-   <Contact/>
+   <Contacts/>
     </Section>
   );
 }

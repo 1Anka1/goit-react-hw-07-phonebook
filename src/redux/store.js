@@ -10,6 +10,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import contactsApi from './contacts/api';
 
 //REDUX
 import rootReducer from './rootReducer';
@@ -21,7 +22,6 @@ const contactsPersistConfig = {
 };
 
 const persistedReducer = persistReducer(contactsPersistConfig, rootReducer);
-
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: getDefaultMiddleware =>
@@ -29,7 +29,6 @@ export const store = configureStore({
       serializableCheck: {
         ignoreActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(contactsApi.middleware),
 });
-
 export const persistor = persistStore(store);

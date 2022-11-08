@@ -1,21 +1,57 @@
-import axios from 'axios';
+import * as api from 'shared/api/contacts';
+import { Report } from 'notiflix/build/notiflix-report-aio';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchContacts = createAsyncThunk('tasks/fetchAll', async () => {
-  const response = await axios.get('/contacts');
-  return response.data;
-});
+const isDublicate = ({ name, number }, contacts) => {
+  const result = contacts.find(
+    item => item.name === name && item.number === number
+  );
+  return result;
+};
 
-// import * as contactShelfAPI from '../shared/api/contacts';
-// import * as contactActions from './actions';
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetch',
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await api.getContacts();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
-// export const fetchContacts = () => async dispatch => {
-//   dispatch(contactActions.fetchContactsRequest());
-//   try {
-//     const contacts = await contactShelfAPI.getContacts();
-//     dispatch(contactActions.fetchContactsSuccess(contacts));
-//     console.log(contacts);
-//   } catch (error) {
-//     dispatch(contactActions.fetchContactsError(error));
-//   }
-// };
+export const addContact = createAsyncThunk(
+  'contacts/add',
+  async (data, { rejectWithValue }) => {
+    try {
+      const result = await api.addContacts(data);
+      return result;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+  {
+    condition: (data, { getState }) => {
+      const { contacts } = getState();
+      if (isDublicate(data, contacts.items)) {
+        return Report.warning(
+          'Warning',
+          'User is already in the contact list.'
+        );
+      }
+    },
+  }
+);
+
+export const removeContact = createAsyncThunk(
+  'contacts/remove',
+  async (id, { rejectWithValue }) => {
+    try {
+      await api.removeContacts(id);
+      return id;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
