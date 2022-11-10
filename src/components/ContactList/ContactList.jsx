@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react'
+import { useRemoveContactMutation } from 'redux/contacts/api';
 import css from './ContactList.module.css'
 
-export default function ContactList({ items, removeContact }) {
+export default function ContactList({ items }) {
+  const [removeContact] = useRemoveContactMutation()
+
 	const elem = items.map(({ name, number, id }) => {
 		return (
       <li className={css.contactListItem } key={id}>

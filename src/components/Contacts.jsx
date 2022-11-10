@@ -2,58 +2,60 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 //REDUX
-import { getFiltredContacts, getState} from 'redux/contacts/selectors';
+// import { getFiltredContacts, getState} from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
 import { setFilter } from 'redux/filter/slice'
-import { fetchContacts, addContact, removeContact } from 'redux/contacts/operations';
-// import { useFetchContactsQuery, useAddContactMutation, useRemoveContactMutation } from 'redux/contacts/api';
+import { fetchContacts } from 'redux/contacts/operations';
+import { useGetContactsQuery, useAddContactMutation } from 'redux/contacts/api';
+
 //COMPONENTS
 import ContactForm from 'components/ContactForm';
 import ContactList from 'components/ContactList';
 import Filter from 'components/Filter';
-// import { useState } from 'react';
 
 export default function Contacts() {
-  // const [page, setPage] = useState(1);
-  // const { data =[], isLoading, isSuccess } = useFetchContactsQuery(page);
-  // const [addContact] = useAddContactMutation();
-  // const [removeContact] = useRemoveContactMutation()
+  const [addContact] = useAddContactMutation();
 
-  const contacts = useSelector(getFiltredContacts);
-  // console.log(contacts);
-  const {loading, error} = useSelector(getState);
+  const { data =[], isLoading, isSuccess, isError } = useGetContactsQuery();
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
+   const filteredContacts = () =>
+    data
+      .filter(
+        ({ name, number }) =>
+          name.toLocaleLowerCase().includes(filter.toLocaleLowerCase()) ||
+          number.includes(filter)
+      )
+      .sort((firstContact, secondContact) =>
+        firstContact.name.localeCompare(secondContact.name)
+     );
+  
   useEffect(() => {
     dispatch(fetchContacts())
   }, [dispatch])
 
   const onAddContact = contact => {
-       const action = addContact(contact);
-        dispatch(action);
+    addContact(contact)
   };
-
-  const onRemoveContact = id => {
-    const action = removeContact(id);
-        dispatch(action);  };
 
   const onChangeFilter = e => {
     const { value } = e.target;
     dispatch(setFilter(value))
   };
-  const length = contacts.length;
+
+  const length = data.length;
   return (
     <>
       <ContactForm onSubmit={onAddContact} />
       <Filter onChangeFilter={onChangeFilter} filter={filter} />
-      {length > 0 ? (
-        <ContactList items={contacts} removeContact={onRemoveContact} />
+      {isSuccess && length > 0 ? (
+        <ContactList items={filteredContacts()} />
       ) : (
         <p>Contact list is empty.</p>
       )}
-      {loading && <p>...loading</p>}
-      {error && <p>oops, something went wrong</p>}
+      {isLoading && <p>...loading</p>}
+      {isError && <p>oops, something went wrong</p>}
     </>
   );
 }
