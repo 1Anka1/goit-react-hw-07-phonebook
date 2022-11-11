@@ -17,14 +17,14 @@ const contactsApi = createApi({
         method: 'POST',
         body,
       }),
-      invalidatesTags: [{ type: 'Contacts' }],
+      invalidatesTags: ['Contact'],
     }),
     removeContact: builder.mutation({
       query: id => ({
         url: `/${id}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
+      invalidatesTags: ['Contact'],
     }),
   }),
 });

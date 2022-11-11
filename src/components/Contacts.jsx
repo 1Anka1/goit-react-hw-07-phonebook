@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 //REDUX
-// import { getFiltredContacts, getState} from 'redux/contacts/selectors';
 import { getFilter } from 'redux/filter/selectors';
 import { setFilter } from 'redux/filter/slice'
 import { fetchContacts } from 'redux/contacts/operations';
@@ -20,7 +19,7 @@ export default function Contacts() {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
 
-   const filteredContacts = () =>
+  const filteredContacts = () =>
     data
       .filter(
         ({ name, number }) =>
